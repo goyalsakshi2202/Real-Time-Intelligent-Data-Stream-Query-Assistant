@@ -1,0 +1,27 @@
+services:
+  api:
+    build: .
+    image: rtidq-assistant:dev
+    container_name: rtidq-api
+    environment:
+      - PYTHONUNBUFFERED=1
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    volumes:
+      - ./app:/app/app
+
+  redis:
+    image: redis:7-alpine
+    container_name: rtidq-redis
+    ports:
+      - "6379:6379"
+
+networks:
+  default:
+    name: rtidq-net
+
