@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from datetime import datetime
+from app.api.routers import query
 
 app = FastAPI(title="RTIDSA API", version="0.1.0")
+app.include_router(query.router, prefix="")
 
 
 @app.get("/health")
